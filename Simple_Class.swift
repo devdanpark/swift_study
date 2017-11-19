@@ -34,6 +34,15 @@ class Truck:Car {
     func getModel() -> Int {
         return model!
     }
+    //override, same function but different implementation
+    override func getPrice() -> Double {
+        let newPrice = price! - (Double(milesDrive! * 30))
+        return newPrice
+    }
+    //override
+    override init(type:String, model: Int, price:Double, milesDrive:Int, owner:String) {
+        super.init(type: type, model: model, price: price, milesDrive: milesDrive, owner: owner)
+    }
 }
 //create instance
 let car1 = Car() //including all the properties of Car class
