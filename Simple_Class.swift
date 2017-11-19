@@ -69,3 +69,10 @@ let truck1 = Truck(type: "BMW", model: 2011, price: 135455, mildesDrive: 552145,
 print(truck1.getPrice())
 print(truck1.getOwner())
 print(truck1.getModel())
+
+//casting truck to car
+//'as Car' must be added right after the declaration
+let carCast = Truck(type: "BMW", model: 2011, price: 135455, mildesDrive: 552145, owner: "Dan") as Car
+//Truck has the same methods and properties as Car class
+print(carCast.getPrice())
+print(carCast.getOwner())
