@@ -29,3 +29,25 @@ if genres.eisEmpty{
 - isSuperset(of:) :Returns a Boolean value that indicates whether this set is a superset of the given set.
 - isStrictSubset(of:) and isStrictSuperset(of:) :methods to test whether a set is a subset or superset of, but not equal to, another set.
 - isDisjoint(with:) :method to test whether a set has any elements in common with another set. 
+
+### Examples
+```swift
+let A : Set = [1,3,5,7,9]
+let B : Set = [3,5]
+let C : Set = [3,5]
+let D : Set = [2,4,6]
+
+B.isSubset(of: A) // true
+A.isSuperset(of: B) //true
+C.isStrictSubset(of: A)//true
+C.isStrictSubset(of: B)//false
+A.isDisjoint(wit: D)//true
+```
+
+### Sets and Array
+``` swift
+var A= [4,2,5,1,7,4,9,11,3,5,4]
+let B = Set(A) //set
+A = Array(B) //[2,4,9,5,7,3,1,11] -> deleted duplicate values.
+A = Array(Set(A)) //combined both two lines of code above
+```
