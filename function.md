@@ -255,3 +255,377 @@ func boo(age: Int) -> String {
 
 // This function's type is (Int) -> String
 ```
+
+``` swift
+let t1: (Int, String) -> String = boo
+
+let t2 = boo(age:name:)
+```
+
+``` swift
+let fn01: (Int) -> String = boo // boo(age:)
+let fn02: (Int, String) -> String = boo // boo(age: name:)
+```
+
+``` swift
+func boo(age: Int, name: String) -> String {
+    return "\(name)'s age \(age)"
+}
+
+func boo(height: Int, nick: String) -> String {
+    return"\(nick)'s height is \(height)"
+}
+
+let fn03: (Int, String) -> String = boo
+let fn04: (Int, String) -> String = boo
+
+let fn03: (Int, String) -> String = boo(age:name:)
+let fn04: (Int, String) -> String = boo(height:nick:)
+
+let fn03 = boo(age:name:)
+let fn04 = boo(height:nick:)
+```
+
+```swift
+func foo(age: Int, name: String) -> (String, Int){
+    return (name, age)
+}
+```
+``` swift
+// No parameter
+func foo() -> String {
+    return "Empty Values"
+}
+
+// type : ()-> String
+
+// No return value
+func boo(base: Int) {
+    print("Param = \(base)")
+}
+//type: (Int) -> ()
+
+// No Parameter and No Return Value
+func too() {
+    print("Empty values")
+}
+// () -> ()
+```
+
+### Using function as a return value
+``` swift
+func desc() -> String{
+    return "this is desc()"
+}
+
+func pass() -> () -> String {
+    return desc
+}
+// type: () -> String
+
+let p = pass()
+p() // "this is desc()"
+```
+
+``` swift
+func plus(a: int, b: Int) -> Int {
+    return a + b
+}
+
+func divide(a: Int, b: Int) -> Int {
+    guard b != 0 else {
+        return 0
+    }
+    return a / b
+}
+
+func calc(_operand: String) -> (Int, Int) -> Int {
+
+    switch operand {
+
+        case "+" :
+          return plus
+
+        case "/" :
+          return divide
+
+        default :
+          return plus
+    }
+}
+
+let c = calc("+")
+c(3,4) // plus(3,4) = 7
+
+let c4 = calc("/")
+c4(3,4) // divide(3,4) = 0
+```
+
+### Callback Function
+``` swift
+func incr(param: Int) -> Int {
+    return param + 1
+}
+
+func broker(base: Int, function fn: (Int) -> Int) -> Int {
+    return fn(base)
+}
+
+broker(base: 3, function: incr) //4
+```
+- Mostly, we call a mediator function as "Broker"
+
+``` swift
+// Callback function example
+
+func successThroug() {
+    print("success")
+}
+
+func failThrough() {
+    print("error occurred")
+}
+
+func divide(base: Int, success sCallBack: () -> Void, fall fCallBack: () -> Void) -> Int {
+    
+    guard base != 0 else {
+        fCallBack() //error
+        return 0
+    }
+
+    defer {
+        sCallBack() //Success
+    }
+    return 100 / base
+}
+
+divide(base: 30, success: successThrough, fail: failThrough)
+```
+
+### defer block
+- It is used regardless of order. It is executed right before the function ends.
+- If the function ends before reading the defer block, defer block would not be executed.
+- You can create defer block several times. Then, the last one executes first. They are executed reversely.
+- You can reiterate defer block. Then the outer defer block is executed first and then the innerest defer block is executes at the end.
+
+``` swift
+divide(base: 30, success: successThrough, fail: failThrough)
+
+divide(base:success:fail) //call the function.
+// In this case, if the function's operation succeeded, then it runs successThrough. If failed, it runs failThrough. 
+```
+
+### Closure
+``` swift
+divide(base: 30
+    success: {
+        () -> Void in
+        print("success")
+    },
+    fail: {
+        () -> Void in
+        print("failed")
+    }
+)
+```
+
+### Nested Function
+- Inner Function
+- Outer Function
+
+``` swift
+// Outer Function
+func outer(base: Int) -> String {
+    //Inner Function
+    func inner(inc: Int) -> String{
+        return "\(inc) returned"
+    }
+    let result = inner(inc: base +1 )
+    return result
+}
+outer(base: 3) // "4 returned"
+```
+
+``` swift
+// outer function
+func outer(param: Int) -> (Int) -> String {
+    //Inner Function
+    func inner(inc: Int) -> String {
+        return "\(inc) is returned "
+
+    }
+    return inner
+}
+
+let fn1 = outer(param: 3) // outer() is executed, then inner is substituted.
+let fn2 = fn1(30) // It is the same as inner(inc: 30)
+```
+- Here, the inner function's return value is returned to the outer function's output.
+- However, here, if the inner function is returned like this, the outer function's output is the inner function itself.
+
+``` swift
+func basic(param: Int) -> (Int)-> Int {
+    //Closure begins
+    let value = param + 20
+
+    func append(add: Int) -> Int {
+        return value + add
+    }
+    //Closure Ends
+    return append
+}
+let result = basic(param: 10)
+result(10)
+//40
+```
+- Here, append function has 'Closure'
+- Closure: It is created when returns inner function inside of the outer function and the inner function refers the outer function's local variable or constant.
+- THat is, "Closure" is an Object that contains Context which affects both inner and outer functions.
+ 
+``` swift
+{
+    () -> () in
+    print("Closure is Executed")
+}
+```
+``` swift
+{
+    () -> Void in
+    print("Closure is Executed")
+}
+```
+``` swift
+let f = {() -> Void in
+    print("Closure is executed")
+}
+f()
+```
+``` swift
+({
+    () -> Void in
+    print("Closure is Executed")
+})()
+```
+``` swift
+let c = { (s1: Int, s2: String) -> Void in
+    print("s1: \(s1), s2:\(s2)") 
+}
+c(1, "closure")
+```
+``` swift
+({
+    (s1: Int, s2: String) -> Void in
+    print("s1: \(s1), s2:\(s2)")
+})(1, "closure")
+```
+
+### Closure Expression
+``` swift
+
+var value = [1, 9, 5, 7, 3, 2]
+func order(s1: Int, s2: Int) -> Bool {
+    if s1 > s2 {
+        return true 
+    } else {
+        return false
+    }
+}
+//sort by using sort(by:)
+value.sort(by: order)
+//[9,7,5,3,2,1]
+
+{
+    (s1: Int, s2: Int) -> Bool in
+    if s1 > s2 {
+        return true
+    } else {
+        return false
+    }
+}
+
+value.sort(by: {
+    (s1: Int, s2: Int) -> Bool in
+    if s1 > s2 {
+        return true
+    } else {
+        return false
+    }
+})
+
+{
+    (s1: Int, s2: Int) -> Bool in
+    return s1 > s2
+}
+
+value.sort(by: {(s1: Int, s2: Int) -> Bool in return s1 > s2})
+
+{ (s1: Int, s2: Int) in
+    return s1 > s2
+}
+
+value.sort(by: { (s1: Int, s2: Int) in return s1 > s2})
+
+value.sort(by: >)
+```
+
+### Trailing Closure
+``` swift
+value.sort(by: {(s1, s2) in 
+    return s1 > s2
+})
+```
+``` swift
+value.sort() {(s1,s2) in
+    return s1 > s2
+}
+```
+``` swift
+func divide(base: Int, success s: () -> Void -> Int) {
+    defer {
+        s() //run "success func"
+    } 
+    return 100 / base
+}
+
+divide(base: 100 { () in 
+    print("operating success")
+})
+//success can be ommitted
+```
+
+## @escaping and @autoescape
+### @escaping : save closure delievered by param, then make it be used in other cases
+``` swift
+func callback(fn: () -> Void) {
+    fn()
+} 
+
+callback {
+    print("Closure Executed")
+} 
+```
+- callback(fn:) executes Closure delievered by param.
+``` swift
+func callback(fn: () -> Void) {
+    let f = fn // Closure to f
+    f() // execute Closure
+}
+```
+- This code above will have an error "Non-escaping parameter 'fn' may only be called -> This means that Non-escaping param 'fn' can only directly be called.
+
+``` swift
+func callback(fn: () -> Void) {
+    func innerCallback() {
+        fn()
+    }
+}
+//adding @escaping
+func callback(fn: @escaping() -> Void) {
+    let f = fn // Closure
+    f() // execute
+}
+//escaping closure
+callback {
+    print("Clsure Executed")
+}
+```
