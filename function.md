@@ -629,3 +629,46 @@ callback {
     print("Clsure Executed")
 }
 ```
+
+### @autoclosure
+``` swift
+func condition(stmt: () -> Bool) {
+    if stmt() == true {
+        print("true")
+    } else {
+        print("false")
+    }
+}
+
+//execution 1
+condition(stmt: {
+    4 > 2
+})
+//execution 2
+condition {
+    4 > 2
+}
+```
+``` swift
+func condition(stmt: @autoclosure () -> Bool) {
+    if stmt() == true {
+        print("true")
+    } else {
+        print("false")
+    }
+}
+
+condition(stmt: (4 > 2)) 
+```
+``` swift
+//empty array
+var arrs = [String]()
+
+func addVars(fn: @autoclosure() -> Void) {
+    arrs = Array(repeating: "", count: 3)
+    fn()
+}
+
+arrs.insert("KR", at:1) //error
+
+addVars(fn: arrs.insert("KR", at: 1)) //delayed execution
