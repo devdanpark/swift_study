@@ -650,5 +650,3 @@ class SUV: Car {
 
 let jeep: Vehicle = SUV()
 ```
-=======
->>>>>>> 1a5dd9a5ee8e5a6997b60a7c91e9c7b2258b0b94
