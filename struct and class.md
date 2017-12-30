@@ -111,6 +111,7 @@ variablesOfInstance.startValue = 0
 let constantsOfInstance = FixedLengthRange(startValue: 3, length: 4)
 constantsOfInstance.startValue = 0 // X
 ```
+<<<<<<< HEAD
 ### Lazy 
 - Property with Lazy keyword would be declared but, not initialized. When the property would be called, then it would be initialized.
 
@@ -649,3 +650,5 @@ class SUV: Car {
 
 let jeep: Vehicle = SUV()
 ```
+=======
+>>>>>>> 1a5dd9a5ee8e5a6997b60a7c91e9c7b2258b0b94
