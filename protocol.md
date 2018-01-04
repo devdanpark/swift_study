@@ -19,3 +19,19 @@ protocol SomeProtocol : InheritedProtocol1, InheritedProtocol2 {
     init(arg: Type)
 }
 ```
+- Anyone that implements SomeProtocol must also implement InheritedProtocol1 and 2.
+- You must specify whether a property is get only or both get and set
+- Any functions that are expected to mutate the receiver should be marked mutating.
+- You can even specify that implementewrs must implement a given initializer
+``` swift
+class SomeClass: SuperClassOfSomeClass, SomeProtocol, AnotherProtocol {
+    //implementation of SomeClass here
+    //which must include all the properties and methods in SomeProtocol & AnotherProtocol
+}
+```
+``` swift
+struct SomeStruct : SomeProtocol, AnotherProtocol {
+    //implementation of SomeStruct here
+    //which must include all the properties and methods in SomeProtocol & AnotherProtocol
+}
+```

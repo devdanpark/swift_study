@@ -650,3 +650,191 @@ class SUV: Car {
 
 let jeep: Vehicle = SUV()
 ```
+
+``` swift
+var list = [Vehicle]()
+list.append(Vehicle())
+list.append(Car())
+list.append(SUV())
+
+SUV() is SUV // ture
+SUV() is Car // true
+SUV() is Vehicle // true
+Car() is Vehicle // true
+Car() is SUV //false
+
+``` 
+### Type Casting Operation
+``` swift
+let someCar: Vehicle = SUV()
+```
+- Upcasting
+- DownCasting
+
+- When DownCasting, if there's an error, it returns nil
+``` swift
+let anyCar: Car = SUV() //SUV instance but, Car type
+let anyVehicle = anyCar as Vehicle
+```
+
+``` swift
+//downcasting
+let anySUV = anyCar as? SUV
+if anySUV != nil {
+    print("\(anySUV!)")
+}
+```
+or
+``` swift
+let anySUV = anyCar as! SUV
+print("\(anySUV)")
+```
+
+### Any, AnyObject
+- Exception : Not Inherited -> Can be type-Casted
+``` swift
+func move(_param: AnyObject) -> AnyObject {
+    return param
+}
+move(Car())
+move(Vehicle())
+```
+``` swift
+var list = [AnyObject]()
+list.append(Vehicle())
+list.append(Car())
+list.append(SUV())
+```
+- Only Downcasting is executed
+``` swift
+let obj: AnyObject = SUV()
+if let suv = obj as? SUV {
+    print("\(suv) casting success")
+}
+```
+- If class, then OK
+``` swift
+var value: Any = "Sample String"
+value = 3
+value = false
+value = [1,2,3]
+value = {
+    print("function")
+}
+```
+
+## Initialization
+### Init
+``` swift
+init(<param> : <Type> ...) {
+    // param init
+    // others
+}
+```
+- Initialization method name must be 'init'
+- can be overloaded by different param names or types
+- Mostly, called when instance would be created
+``` swift
+struct Resolution {
+    var width = 0
+    var height = 0
+
+    //init method : param -> width
+    init(width: Int) {
+        self.width = width
+    }
+}
+
+class VideoMode {
+    var resolution = Resolution(width: 2048)
+    var interlaced = false
+    var frameRate = 0.0
+    var name: String?
+
+    init(interlaced: Bool, frameRate: Double) {
+        self.interlaced = interlaced
+        self.frameRate = frameRate
+    }
+
+    init(name: String) {
+        self.name = name
+    }
+    init(interlaced: Bool) {
+        self.interlaced = interlaced
+    }
+    init(interlaced: Bool, frameRate: Double, name: String) {
+        self.interlaced = interlaced
+        self.frameRate = frameRate
+        self.name = name
+    }
+}
+
+// Resolution Structure Instance
+let resolution = Resolution(width: 4096)
+//VideoMode Class Instance
+let videoMode = VideoMode.init(interlaced: true, frameRate: 40.0)
+let simpleVideoMode = VideoMode(interlaced : true)
+let nameVideoMode = VideoMode(name: "Daniel")
+```
+- When calling, 'init' can be ommited
+- When using default, it is necessary to have a basic init part
+``` swift
+class VideoMode {
+    var resolution = Resolution(width: 4096)
+    var name: String?
+
+    init() {
+
+    }
+}
+let defaultVideoMode = VideoMode()
+```
+or
+``` swift
+class VideoMode {
+    var name: String?
+    
+    init(name: String = "") {
+        self.name = name
+    }
+}
+let defaultVideoMode = VideoMode()
+```
+### Init Overriding
+``` swift
+class Base {
+
+}
+
+class ExBase: Base {
+    override init() {
+
+    }
+}
+```
+``` swift
+class Base {
+    var baseValue: Double
+    init() {
+        self.baseValue = 0.0
+        print("Base Init")
+    }
+
+    init(baseValue: Double) {
+        self.baseValue = baseValue
+    }
+}
+
+class ExBase: Base {
+    override init() {
+        print("ExBase Init")
+    }
+}
+
+let ex = ExBase*()
+```
+
+## Optional Chain
+### Problem of Optional Type
+- Code can be longer as it must be checked by using if statement
+- 
