@@ -837,4 +837,42 @@ let ex = ExBase*()
 ## Optional Chain
 ### Problem of Optional Type
 - Code can be longer as it must be checked by using if statement
-- 
+``` swift
+struct Human {
+    var name: String?
+    var man: Bool = true
+}
+
+var boy: Human? = Human(name: "Daniel", man: true)
+```
+safety check
+``` swift
+if boy != nil {
+    if boy!.name != nil {
+        print("name \(boy!.name!)")
+    }
+}
+```
+- referred as optional chain, must return optional type.
+``` swift
+struct Company {
+    var ceo: Human?
+    var companyName: String?
+    func getCEO() -> Human? {
+        return self.ceo
+    }
+}
+```
+``` swift
+var someCompany: Company? = Company(ceo: Human(name: "Daniel", man: true). companyName: "OPENULL")
+let name = someCompany?.getCEO().name
+if name != nil {
+    print("\(name!)")
+}
+```
+``` swift
+//Optional Chain
+someCompany?.getCEO()?.name
+//break the Optional
+someCompany!.getCEO()!.name
+```
