@@ -30,8 +30,40 @@ class SomeClass: SuperClassOfSomeClass, SomeProtocol, AnotherProtocol {
 }
 ```
 ``` swift
-struct SomeStruct : SomeProtocol, AnotherProtocol {
+struct SomeStruct: SomeProtocol, AnotherProtocol {
     //implementation of SomeStruct here
     //which must include all the properties and methods in SomeProtocol & AnotherProtocol
 }
 ```
+
+### Property
+
+``` swift
+protocol SomePropertyProtocol {
+  var name: String {get set}
+  var description: String {get}
+}
+```
+
+
+
+``` swift
+struct RubyMember: SomePropertyProtocol {
+  var name = "Daniel"
+  var description: String {
+    return "Name : \(self.name)"
+  }
+}
+```
+
+- Implemented SomePropertyProtocol
+
+### Method
+
+``` swift
+protocol SomeMethodProtocol {
+  func execute(cmd: String)
+  func showPort(p: Int) -> String
+}
+```
+
