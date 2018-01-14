@@ -67,3 +67,31 @@ protocol SomeMethodProtocol {
 }
 ```
 
+``` swift
+struct RubyService: SomeMethodProtocol {
+  func execute(cmd: String) {
+    if cmd == "start" {
+      print("execute")
+    }
+  }
+  func showPort(p: Int) -> String {
+    return "Port : \(p)"
+  }
+}
+```
+
+``` swift
+protocol NewMethodProtocol {
+  mutating func execute(cmd command: String, desc: String)
+  func showPort(p: Int, memo desc: String) -> String
+}
+
+struct RubyNewService: NewMethodProtocol {
+  func execute(cmd command: String, desc: String) {
+    if command == "strat" {
+      print("\(desc)executed")
+    }
+  }
+}
+```
+
