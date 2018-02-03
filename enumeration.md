@@ -21,3 +21,9 @@ enmu Direction {
 let N = Direction.north
 let S = Direction.south
 ```
+### Enum Object
+``` swift
+var directionToHead = Direction.west
+var directionToHead: Direction = Direction.west
+var directionToHead = .east
+```
